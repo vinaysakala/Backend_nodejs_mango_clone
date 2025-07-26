@@ -10,13 +10,13 @@ const path = require('path');
 
 const app = express();
 
-const port = 5000;
+const port = process.env.port || 5000;
 
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('database connected'))
-.catch((e) => console.log(e, 'error'))
+    .then(() => console.log('database connected'))
+    .catch((e) => console.log(e, 'error'))
 
 app.use(express.json())
 app.use('/vendor', vendorRoutes);
@@ -28,3 +28,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
 
+
+app.use('/', (req, res) => {
+    res.send('Welcome to the backend server');
+});
